@@ -2,6 +2,7 @@
 
 namespace BoockLog\Models;
 
+use DateInterval;
 use DateTime;
 
 class Atividade{
@@ -23,6 +24,9 @@ class Atividade{
         $this->fim->setTimezone(new \DateTimeZone('America/Sao_Paulo'));
 
         $this->fim->modify('+2 day');
+        $this->fim->modify('+3 hour');
+        $this->fim->modify('+4 minute');
+        $this->fim->modify('+5 second');
 
     }
 
@@ -46,9 +50,14 @@ class Atividade{
         return $this->fim;
     }
 
+    public function duracao():\DateInterval{
+
+        return $this->fim->diff($this->inicio);
+    }
+
     public function __toString():string
     {
-        return "Atividade: {$this->nome} Início: {$this->inicio->format('d/m/Y H\h:i')} Fim: {$this->fim->format('d/m/Y H\h:i')}";
+        return "Atividade: {$this->nome} Início: {$this->inicio->format('d/m/Y H\hi')} Fim: {$this->fim->format('d/m/Y H\hi')} Duração: {$this->duracao()->d}d {$this->duracao()->h}h {$this->duracao()->i}m {$this->duracao()->s}s";
     }
 }
 
